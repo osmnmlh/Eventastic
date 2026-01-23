@@ -37,6 +37,10 @@ graph LR
     UC20(UC-20 Search Participant)
     UC21(UC-21 View Registration Details)
     UC22(UC-22 On-site Payment Exception)
+
+    %% NEW (small additions, same style)
+    UC23(UC-23 Record Payment Details)
+    UC24(UC-24 Validate Check-in Eligibility)
   end
 
   %% Relationships
@@ -48,10 +52,12 @@ graph LR
   Admin --> UC04
   Admin --> UC11
   Admin --> UC12
+
   Part --> UC06
   Part --> UC07
   Part --> UC01
   Part --> UC19
+
   CheckIn --> UC05
 
   %% Includes / Extends
@@ -69,6 +75,11 @@ graph LR
   UC05 -.->|<<include>>| UC20
   UC05 -.->|<<include>>| UC21
   UC05 -.->|<<extend>>| UC22
+
+  %% NEW includes
+  UC04 -.->|<<include>>| UC23
+  UC05 -.->|<<include>>| UC24
+  UC12 -.->|<<include>>| UC08
 ```
 
 ## Common Actions (Included Use Cases)

@@ -3,6 +3,7 @@ package com.eventastic.model;
 import java.util.UUID;
 
 public class Participant {
+<<<<<<< HEAD
     private UUID id;
     private String firstName;
     private String lastName;
@@ -59,3 +60,20 @@ public class Participant {
         this.phone = phone;
     }
 }
+=======
+
+    private UUID participantId;
+    private String fullName;
+    private String email;
+
+    public Participant(UUID participantId, String fullName, String email) {
+        this.participantId = participantId;
+        this.fullName = fullName;
+        this.email = email;
+    }
+
+    public UUID getParticipantId() {
+        return participantId;
+    }
+}
+>>>>>>> e25fc9ab6595f9805deac69870c54ed661f03466

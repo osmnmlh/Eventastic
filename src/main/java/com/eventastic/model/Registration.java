@@ -4,6 +4,7 @@ import com.eventastic.model.enums.RegistrationStatus;
 import com.eventastic.model.enums.RegistrationType;
 
 import java.time.LocalDateTime;
+<<<<<<< HEAD
 import java.util.UUID;
 
 public class Registration {
@@ -20,10 +21,36 @@ public class Registration {
     public Registration(UUID id, Event event, Participant participant, 
                         RegistrationType registrationType, double totalAmount) {
         this.id = id;
+=======
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+public class Registration {
+
+    private UUID registrationId;
+    private Event event;
+    private Participant participant;
+    private RegistrationType registrationType;
+    private RegistrationStatus paymentStatus;
+    private double totalAmount;
+    private LocalDateTime createdAt;
+
+    private List<RegistrationAddOn> addOns = new ArrayList<>();
+    private List<Payment> payments = new ArrayList<>();
+    private CheckIn checkIn;
+
+    public Registration(UUID registrationId, Event event,
+            Participant participant,
+            RegistrationType registrationType,
+            double totalAmount) {
+        this.registrationId = registrationId;
+>>>>>>> e25fc9ab6595f9805deac69870c54ed661f03466
         this.event = event;
         this.participant = participant;
         this.registrationType = registrationType;
         this.totalAmount = totalAmount;
+<<<<<<< HEAD
         this.status = RegistrationStatus.PENDING;
         this.registrationDate = LocalDateTime.now();
     }
@@ -34,12 +61,21 @@ public class Registration {
 
     public void setId(UUID id) {
         this.id = id;
+=======
+        this.paymentStatus = RegistrationStatus.PENDING_PAYMENT;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public UUID getRegistrationId() {
+        return registrationId;
+>>>>>>> e25fc9ab6595f9805deac69870c54ed661f03466
     }
 
     public Event getEvent() {
         return event;
     }
 
+<<<<<<< HEAD
     public void setEvent(Event event) {
         this.event = event;
     }
@@ -68,10 +104,13 @@ public class Registration {
         this.status = status;
     }
 
+=======
+>>>>>>> e25fc9ab6595f9805deac69870c54ed661f03466
     public double getTotalAmount() {
         return totalAmount;
     }
 
+<<<<<<< HEAD
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
@@ -84,3 +123,9 @@ public class Registration {
         this.registrationDate = registrationDate;
     }
 }
+=======
+    public RegistrationStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+}
+>>>>>>> e25fc9ab6595f9805deac69870c54ed661f03466

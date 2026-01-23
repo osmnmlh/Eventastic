@@ -1,45 +1,45 @@
 # Use Case View
 
-## Use Case Diagram
+This page describes the **Use Case View** of the Eventastic backend system, based strictly on the previously defined User Requirements (UR) and System Requirements (SR).
+
+---
+## Part 1: Use Case Diagram (Mermaid.js)
 
 ```mermaid
-usecaseDiagram
-  actor Administrator as Admin
-  actor Participant as Participant
-  actor "Check-in Operator" as CheckIn
+graph LR
+  %% Actors represented as Circles
+  Admin((Administrator))
+  Part((Participant))
+  CheckIn((Check-in Operator))
 
-  rectangle "Eventastic System" {
-    (UC-01 Register for Event) as UC01
-    (UC-02 Create/Edit Event) as UC02
-    (UC-03 Configure Registration Phases & Prices) as UC03
-    (UC-04 Confirm Bank Transfer) as UC04
-    (UC-05 Perform Check-in) as UC05
+  %% System Boundary
+  subgraph Eventastic System
+    direction TB
+    UC01(UC-01 Register for Event)
+    UC02(UC-02 Create / Edit Event)
+    UC03(UC-03 Configure Registration Phases & Prices)
+    UC04(UC-04 Confirm Bank Transfer)
+    UC05(UC-05 Perform Check-in)
+    UC06(UC-06 View Open Events)
+    UC07(UC-07 View Event Details)
+    UC08(UC-08 View Participants)
+    UC09(UC-09 Export Participant List)
+    UC10(UC-10 Configure Add-on Options)
+    UC11(UC-11 Configure On-site Payment)
+    UC12(UC-12 View Statistics)
+    UC13(UC-13 Validate Registration Period)
+    UC14(UC-14 Determine Active Phase)
+    UC15(UC-15 Check Event Capacity)
+    UC16(UC-16 Calculate Total Amount)
+    UC17(UC-17 Generate Bank Transfer Instructions)
+    UC18(UC-18 Select Add-on Options)
+    UC19(UC-19 View Registration Status)
+    UC20(UC-20 Search Participant)
+    UC21(UC-21 View Registration Details)
+    UC22(UC-22 On-site Payment Exception)
+  end
 
-    (UC-06 View Open Events) as UC06
-    (UC-07 View Event Details) as UC07
-    (UC-08 View Participants) as UC08
-    (UC-09 Export Participant List) as UC09
-    (UC-10 Configure Add-on Options) as UC10
-    (UC-11 Configure On-site Payment) as UC11
-    (UC-12 View Statistics) as UC12
-
-    (UC-13 Validate Registration Period) as UC13
-    (UC-14 Determine Active Phase) as UC14
-    (UC-15 Check Event Capacity) as UC15
-    (UC-16 Calculate Total Amount) as UC16
-    (UC-17 Generate Bank Transfer Instructions) as UC17
-    (UC-18 Select Add-on Options) as UC18
-    (UC-19 View Registration Status) as UC19
-    (UC-20 Search Participant) as UC20
-    (UC-21 View Registration Details) as UC21
-    (UC-22 On-site Payment Exception) as UC22
-  }
-
-  Participant --> UC06
-  Participant --> UC07
-  Participant --> UC01
-  Participant --> UC19
-
+  %% Relationships
   Admin --> UC02
   Admin --> UC03
   Admin --> UC10
@@ -48,23 +48,27 @@ usecaseDiagram
   Admin --> UC04
   Admin --> UC11
   Admin --> UC12
-
+  Part --> UC06
+  Part --> UC07
+  Part --> UC01
+  Part --> UC19
   CheckIn --> UC05
 
-  UC01 ..> UC13 : <<include>>
-  UC01 ..> UC14 : <<include>>
-  UC01 ..> UC15 : <<include>>
-  UC01 ..> UC16 : <<include>>
-  UC01 ..> UC17 : <<include>>
-  UC01 ..> UC18 : <<extend>>
-  UC01 ..> UC19 : <<extend>>
+  %% Includes / Extends
+  UC01 -.->|<<include>>| UC13
+  UC01 -.->|<<include>>| UC14
+  UC01 -.->|<<include>>| UC15
+  UC01 -.->|<<include>>| UC16
+  UC01 -.->|<<include>>| UC17
+  UC01 -.->|<<extend>>| UC18
+  UC01 -.->|<<extend>>| UC19
 
-  UC09 ..> UC08 : <<include>>
-  UC04 ..> UC08 : <<include>>
+  UC09 -.->|<<include>>| UC08
+  UC04 -.->|<<include>>| UC08
 
-  UC05 ..> UC20 : <<include>>
-  UC05 ..> UC21 : <<include>>
-  UC05 ..> UC22 : <<extend>>
+  UC05 -.->|<<include>>| UC20
+  UC05 -.->|<<include>>| UC21
+  UC05 -.->|<<extend>>| UC22
 ```
 
 ## Common Actions (Included Use Cases)

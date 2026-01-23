@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class RegistrationPhase {
-<<<<<<< HEAD
     private UUID id;
     private String name;
     private LocalDateTime startDate;
@@ -59,36 +58,11 @@ public class RegistrationPhase {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
-=======
-
-    private UUID phaseId;
-    private String name;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
-    private List<RegistrationTypePrice> prices = new ArrayList<>();
-
-    public RegistrationPhase(UUID phaseId, String name,
-            LocalDateTime startDateTime,
-            LocalDateTime endDateTime) {
-        this.phaseId = phaseId;
-        this.name = name;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-    }
-
-    public boolean isActive(LocalDateTime now) {
-        return !now.isBefore(startDateTime) && !now.isAfter(endDateTime);
-    }
-
-    public void addPrice(RegistrationTypePrice price) {
-        prices.add(price);
->>>>>>> e25fc9ab6595f9805deac69870c54ed661f03466
     }
 
     public List<RegistrationTypePrice> getPrices() {
         return prices;
     }
-<<<<<<< HEAD
 
     public void setPrices(List<RegistrationTypePrice> prices) {
         this.prices = prices;
@@ -98,6 +72,3 @@ public class RegistrationPhase {
         this.prices.add(price);
     }
 }
-=======
-}
->>>>>>> e25fc9ab6595f9805deac69870c54ed661f03466

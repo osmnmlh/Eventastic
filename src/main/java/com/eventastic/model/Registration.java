@@ -4,6 +4,7 @@ import com.eventastic.model.enums.RegistrationStatus;
 import com.eventastic.model.enums.RegistrationType;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class Registration {
@@ -14,16 +15,22 @@ public class Registration {
     private RegistrationStatus status;
     private double totalAmount;
     private LocalDateTime registrationDate;
+    
+    // NEW FIELD: Stores the list of selected add-ons
+    private List<RegistrationAddOn> selectedAddOns;
 
     public Registration() {}
 
+    // UPDATED CONSTRUCTOR: Now accepts List<RegistrationAddOn>
     public Registration(UUID id, Event event, Participant participant, 
-                        RegistrationType registrationType, double totalAmount) {
+                        RegistrationType registrationType, double totalAmount,
+                        List<RegistrationAddOn> selectedAddOns) {
         this.id = id;
         this.event = event;
         this.participant = participant;
         this.registrationType = registrationType;
         this.totalAmount = totalAmount;
+        this.selectedAddOns = selectedAddOns; // Store the list
         this.status = RegistrationStatus.PENDING;
         this.registrationDate = LocalDateTime.now();
     }
@@ -82,5 +89,13 @@ public class Registration {
 
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public List<RegistrationAddOn> getSelectedAddOns() {
+        return selectedAddOns;
+    }
+
+    public void setSelectedAddOns(List<RegistrationAddOn> selectedAddOns) {
+        this.selectedAddOns = selectedAddOns;
     }
 }

@@ -11,6 +11,7 @@ public interface RegistrationRepository {
     Optional<Registration> findById(UUID registrationId);
     List<Registration> findByEventId(UUID eventId);
     List<Registration> findByParticipantId(UUID participantId);
+    Registration findByEventIdAndParticipantId(UUID eventId, UUID participantId);
     long countByEvent(UUID eventId);
     void delete(UUID registrationId);
 }

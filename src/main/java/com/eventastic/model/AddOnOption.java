@@ -8,8 +8,10 @@ public class AddOnOption {
     private String description;
     private double price;
 
-    public AddOnOption(UUID optionId, String name, String description, double price) {
-        this.optionId = optionId;
+    public AddOnOption() {}
+
+    public AddOnOption(UUID id, String name, String description, double price) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;

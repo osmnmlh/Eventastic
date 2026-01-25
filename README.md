@@ -7,7 +7,8 @@ Authors:
 - Osman Melih Gümüş (ex68082)
 - Teodora Kancheva (ex69739)
 - Trayana Atanasova (ex68986)
-Date: January 2026
+
+Date: 25 January 2026
 
 ---
 
@@ -194,3 +195,4 @@ If something is wrong (for example: registration closed, no phase, no price), we
 - replace in-memory storage with a database (JPA/Hibernate)
 - add cancellation/refund flow
 - add logs for debugging
+

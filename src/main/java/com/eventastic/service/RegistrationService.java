@@ -28,23 +28,23 @@ public class RegistrationService {
 
         LocalDateTime now = LocalDateTime.now();
 
-        // Validate input
+        // Quick null check so we don't crash later
         if (event == null || participant == null || type == null) {
             throw new IllegalArgumentException("Event, participant, and type cannot be null");
         }
 
-        // 1. Validate Event Dates
+        // 1) Is registration currently open?
         if (now.isBefore(event.getRegistrationStart()) ||
                 now.isAfter(event.getRegistrationEnd())) {
             throw new IllegalStateException("Registration closed");
         }
 
-        // 2. Validate Capacity
+        // 2) Capacity check (no overbooking)
         if (registrationRepository.countByEvent(event.getEventId()) >= event.getMaxParticipants()) {
             throw new IllegalStateException("Event full");
         }
 
-        // 3. Find Active Phase
+        // 3) Find which phase is active right now (early bird / regular / etc.)
         RegistrationPhase activePhase = null;
         for (RegistrationPhase phase : event.getPhases()) {
             if (phase.isActive(now)) {
@@ -57,7 +57,7 @@ public class RegistrationService {
             throw new IllegalStateException("No active phase");
         }
 
-        // 4. Get Base Price
+        // 4) Find the base price for the selected registration type
         double basePrice = 0;
         for (RegistrationTypePrice price : activePhase.getPrices()) {
             if (price.getRegistrationType() == type) {
@@ -72,13 +72,13 @@ public class RegistrationService {
 
         double total = basePrice;
 
-        // 5. Process Add-Ons and Create RegistrationAddOn objects
+        // 5) Add-ons: increase total and also keep a list in the registration
         List<RegistrationAddOn> registrationAddOns = new ArrayList<>();
         
         if (addOns != null) {
             for (AddOnOption option : addOns) {
                 total += option.getPrice();
-                // Create a record for this add-on (assuming quantity 1)
+                // We keep quantity as 1 here (simple version)
                 registrationAddOns.add(new RegistrationAddOn(
                     UUID.randomUUID(), 
                     option, 
@@ -87,10 +87,10 @@ public class RegistrationService {
             }
         }
 
-        // 6. Save Participant
+        // 6) Save participant (in our case: in-memory repo)
         participantRepository.save(participant);
 
-        // 7. Create Registration
+        // 7) Create the registration object
         Registration registration = new Registration(
                 UUID.randomUUID(), 
                 event, 
@@ -100,63 +100,38 @@ public class RegistrationService {
                 registrationAddOns
         );
 
-        // 8. Save Registration
+        // 8) Save it and return
         registrationRepository.save(registration);
         return registration;
     }
 
-    /**
-     * Get all registrations for a specific event.
-     * @param eventId the ID of the event
-     * @return list of registrations for the event
-     */
+    // Returns all registrations for one event
     public List<Registration> getEventRegistrations(UUID eventId) {
         return registrationRepository.findByEventId(eventId);
     }
 
-    /**
-     * Get all registrations for a specific participant.
-     * @param participantId the ID of the participant
-     * @return list of registrations for the participant
-     */
+    // Returns all registrations of one participant
     public List<Registration> getParticipantRegistrations(UUID participantId) {
         return registrationRepository.findByParticipantId(participantId);
     }
 
-    /**
-     * Get a specific registration by ID.
-     * @param registrationId the ID of the registration
-     * @return the registration if found, null otherwise
-     */
+    // Finds one registration by id (returns null if not found)
     public Registration getRegistration(UUID registrationId) {
         return registrationRepository.findById(registrationId).orElse(null);
     }
 
-    /**
-     * Get the number of registrations for an event.
-     * @param eventId the ID of the event
-     * @return the count of registrations
-     */
+    // How many people registered for this event?
     public long getEventRegistrationCount(UUID eventId) {
         return registrationRepository.countByEvent(eventId);
     }
 
-    /**
-     * Get available spots for an event.
-     * @param event the event
-     * @return the number of available registration spots
-     */
+    // Remaining capacity = max - current registrations
     public long getAvailableSpots(Event event) {
         long registeredCount = registrationRepository.countByEvent(event.getEventId());
         return event.getMaxParticipants() - registeredCount;
     }
 
-    /**
-     * Check if a participant is already registered for an event.
-     * @param eventId the ID of the event
-     * @param participantId the ID of the participant
-     * @return true if participant is registered, false otherwise
-     */
+    // Simple helper: is this participant already registered for the event?
     public boolean isParticipantRegistered(UUID eventId, UUID participantId) {
         return registrationRepository.findByEventIdAndParticipantId(eventId, participantId) != null;
     }

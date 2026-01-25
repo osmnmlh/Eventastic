@@ -39,6 +39,27 @@ We still have some classes like `Payment` and `CheckIn`, but they are only data 
 
 ---
 
+## Decisions (short report)
+This section is a quick summary of the main decisions we made while implementing Part 2.
+
+- **Language**: Java (we used Java 17) because it is stable, common, and fits the course.
+- **Build tool**: Maven, so anyone can build/package the project in a standard way.
+- **Library style**: We did not build a UI. The goal is a backend library that another app can call.
+- **No database**: We store data in memory using basic structures (HashMap / ArrayList) as required.
+- **Project structure**: We separated code into `model`, `repository`, and `service` to keep it readable.
+- **Public API**: The main “operations” are callable methods (for example `RegistrationService.register(...)` and repository `save/find` methods).
+- **Dates and IDs**: We used `LocalDateTime` for registration windows and `UUID` for unique IDs.
+
+---
+
+## Project management (Git / GitHub)
+- We used **regular commits** to track progress.
+- We worked with **branches** and merged changes back to `main`.
+- We created GitHub **Issues** for the main tasks (model, repositories, service logic, main demo, README). You can check them here:
+   https://github.com/osmnmlh/Eventastic/issues
+
+---
+
 ## How to run
 
 Prerequisites:

@@ -8,9 +8,7 @@ public class RegistrationAddOn {
     private AddOnOption addOnOption;
     private int quantity;
 
-    public RegistrationAddOn(UUID registrationAddOnId,
-            AddOnOption addOnOption,
-            int quantity) {
+    public RegistrationAddOn(UUID registrationAddOnId, AddOnOption addOnOption, int quantity) {
         this.registrationAddOnId = registrationAddOnId;
         this.addOnOption = addOnOption;
         this.quantity = quantity;

@@ -17,14 +17,23 @@ public class InMemoryParticipantRepository implements ParticipantRepository {
 
     @Override
     public Optional<Participant> findById(UUID participantId) {
-        return Optional.ofNullable(storage.get(participantId));
+        // Get participant by ID
+        Participant participant = storage.get(participantId);
+        if (participant != null) {
+            return Optional.of(participant);
+        }
+        return Optional.empty();
     }
 
     @Override
     public Optional<Participant> findByEmail(String email) {
-        return storage.values().stream()
-                .filter(p -> p.getEmail().equalsIgnoreCase(email))
-                .findFirst();
+        // Search through all participants to find one with matching email
+        for (Participant p : storage.values()) {
+            if (p.getEmail() != null && p.getEmail().equalsIgnoreCase(email)) {
+                return Optional.of(p);
+            }
+        }
+        return Optional.empty();
     }
 
     @Override

@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class RegistrationService {
 
@@ -24,15 +23,6 @@ public class RegistrationService {
         this.registrationRepository = registrationRepository;
     }
 
-    /**
-     * Register a participant for an event with optional add-ons.
-     * @param event the event to register for
-     * @param participant the participant registering
-     * @param type the registration type (STUDENT, PROFESSIONAL, etc.)
-     * @param addOns optional list of add-on options
-     * @return the created registration
-     * @throws IllegalStateException if registration is not allowed
-     */
     public Registration register(Event event, Participant participant,
             RegistrationType type, List<AddOnOption> addOns) {
 
@@ -55,17 +45,30 @@ public class RegistrationService {
         }
 
         // 3. Find Active Phase
-        RegistrationPhase activePhase = event.getPhases().stream()
-                .filter(p -> p.isActive(now))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("No active phase"));
+        RegistrationPhase activePhase = null;
+        for (RegistrationPhase phase : event.getPhases()) {
+            if (phase.isActive(now)) {
+                activePhase = phase;
+                break;
+            }
+        }
+        
+        if (activePhase == null) {
+            throw new IllegalStateException("No active phase");
+        }
 
         // 4. Get Base Price
-        double basePrice = activePhase.getPrices().stream()
-                .filter(p -> p.getRegistrationType() == type)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("No price for registration type"))
-                .getAmount();
+        double basePrice = 0;
+        for (RegistrationTypePrice price : activePhase.getPrices()) {
+            if (price.getRegistrationType() == type) {
+                basePrice = price.getAmount();
+                break;
+            }
+        }
+        
+        if (basePrice == 0) {
+            throw new IllegalStateException("No price for registration type");
+        }
 
         double total = basePrice;
 

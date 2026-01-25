@@ -4,7 +4,6 @@ import com.eventastic.model.Event;
 import java.util.*;
 
 public class InMemoryEventRepository implements EventRepository {
-    // In-memory storage
     private final Map<UUID, Event> storage = new HashMap<>();
 
     @Override
@@ -18,7 +17,12 @@ public class InMemoryEventRepository implements EventRepository {
 
     @Override
     public Optional<Event> findById(UUID eventId) {
-        return Optional.ofNullable(storage.get(eventId));
+        // Get event by ID
+        Event event = storage.get(eventId);
+        if (event != null) {
+            return Optional.of(event);
+        }
+        return Optional.empty();
     }
 
     @Override

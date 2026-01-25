@@ -1,2 +1,6 @@
 /target/
 *.class
+
+# Local/auxiliary docs (not part of deliverable)
+COMPLETION_REPORT.md
+FIXES_SUMMARY.md
